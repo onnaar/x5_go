@@ -30,7 +30,6 @@ func (m *Memory) Find(name string) (service.DeliveryPricer, error) {
 	tariff, ok := m.pricers[name]
 	if ok {
 		return tariff, nil
-	} else {
-		return nil, fmt.Errorf("error: %w", service.ErrUnknownTariff)
 	}
+	return nil, fmt.Errorf("error: %w", service.ErrUnknownTariff)
 }

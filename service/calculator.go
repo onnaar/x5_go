@@ -19,7 +19,7 @@ func (c *Calculator) Calculate(order model.Order) (int64, error) {
 	if err != nil {
 		return 0, &OrderPriceError{order.ID, order.Tariff, err}
 	}
-	price, err := pricer.Price(order.WeightGrams, order.Distance)
+	price, err := pricer.Price(order.WeightGrams, order.DistanceKM)
 	if err != nil {
 		return 0, &OrderPriceError{order.ID, order.Tariff, err}
 	}
