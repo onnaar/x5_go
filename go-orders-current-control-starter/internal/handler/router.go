@@ -29,8 +29,8 @@ type Handler struct {
 func NewRouter(service OrderService, logger *slog.Logger) http.Handler {
 	h := &Handler{service: service, logger: logger}
 	router := chi.NewRouter()
-	router.Use(recoveryMiddleware(logger))
 	router.Use(requestLoggingMiddleware(logger))
+	router.Use(recoveryMiddleware(logger))
 	router.Get("/health", h.health)
 	router.Get("/swagger/*", httpSwagger.Handler())
 	router.Route("/api/v1/orders", func(r chi.Router) {
@@ -111,6 +111,7 @@ func (h *Handler) listOrders(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} order.Order
 // @Failure 400 {object} errorResponse
 // @Failure 404 {object} errorResponse
+// @Failure 500 {object} errorResponse
 // @Router /api/v1/orders/{id} [get]
 func (h *Handler) getOrder(w http.ResponseWriter, r *http.Request) {
 	id, err := parseID(r)
@@ -139,6 +140,7 @@ func (h *Handler) getOrder(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} errorResponse
 // @Failure 404 {object} errorResponse
 // @Failure 409 {object} errorResponse
+// @Failure 500 {object} errorResponse
 // @Router /api/v1/orders/{id}/status [patch]
 func (h *Handler) updateOrderStatus(w http.ResponseWriter, r *http.Request) {
 	id, err := parseID(r)
@@ -172,6 +174,7 @@ func (h *Handler) updateOrderStatus(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {array} order.StatusChange
 // @Failure 400 {object} errorResponse
 // @Failure 404 {object} errorResponse
+// @Failure 500 {object} errorResponse
 // @Router /api/v1/orders/{id}/history [get]
 func (h *Handler) getOrderHistory(w http.ResponseWriter, r *http.Request) {
 	id, err := parseID(r)

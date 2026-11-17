@@ -133,6 +133,10 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
       summary: получить заказ
       tags:
       - orders
@@ -160,6 +164,10 @@ paths:
             $ref: '#/definitions/handler.errorResponse'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/handler.errorResponse'
       summary: получить историю статусов
@@ -199,6 +207,10 @@ paths:
             $ref: '#/definitions/handler.errorResponse'
         "409":
           description: Conflict
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/handler.errorResponse'
       summary: изменить статус заказа
