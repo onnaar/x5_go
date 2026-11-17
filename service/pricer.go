@@ -55,7 +55,7 @@ func NewPickup() Pickup {
 
 func (t Pickup) Price(weightGrams, distanceKM int) (int64, error) {
 	if err := t.validate(weightGrams, distanceKM); err != nil {
-		return 0, nil
+		return 0, err
 	}
 	price := t.BasePriceKopecks + t.PerKGKopecks*billableKilograms(weightGrams) + t.PerKMKopecks*int64(distanceKM)
 	return price, nil
@@ -72,7 +72,7 @@ func NewExpress() Express {
 
 func (t Express) Price(weightGrams, distanceKM int) (int64, error) {
 	if err := t.validate(weightGrams, distanceKM); err != nil {
-		return 0, nil
+		return 0, err
 	}
 	price := t.BasePriceKopecks + t.PerKGKopecks*billableKilograms(weightGrams) + t.PerKMKopecks*int64(distanceKM)
 	return price, nil

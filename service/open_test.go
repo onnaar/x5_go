@@ -36,9 +36,20 @@ func TestCalculatorUnknownTariff(t *testing.T) {
 	}
 }
 
-func TestCourierRejectsInvalidWeight(t *testing.T) {
-	_, err := service.NewCourier().Price(0, 10)
+func TestCalculatorInvalidWeight(t *testing.T) {
+	calculator := service.NewCalculator(repository.Default())
+	_, err := calculator.Calculate(model.Order{
+		ID:          "order-3",
+		Tariff:      "courier",
+		WeightGrams: 0,
+		DistanceKM:  10,
+	})
+
 	if !errors.Is(err, service.ErrInvalidWeight) {
 		t.Fatalf("errors.Is(%v, ErrInvalidWeight) = false", err)
+	}
+	var priceErr *service.OrderPriceError
+	if !errors.As(err, &priceErr) {
+		t.Fatalf("errors.As(%v, *OrderPriceError) = false", err)
 	}
 }

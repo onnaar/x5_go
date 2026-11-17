@@ -1,3 +1,4 @@
+//Package service
 package service
 
 import "example.com/delivery/model"
